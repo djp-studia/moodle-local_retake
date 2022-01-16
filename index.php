@@ -27,6 +27,7 @@ if(isset($_POST['confirm_retake'])){
 
     \local_retake\Cleanser::cleanActivityCompletion($courseid, $USER->id);
     \local_retake\Cleanser::cleanScormData($courseid, $USER->id);
+    \local_retake\Cleanser::cleanH5PActivityAndAttempts($courseid, $USER->id);
 
     // rebuild course cache untuk update tampilan di user
     rebuild_course_cache($courseid);

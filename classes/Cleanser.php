@@ -54,4 +54,26 @@ class Cleanser
             [$courseId, $userId]
         );
     }
+
+    /**
+     * fungsi untuk menghapus seluruh activity dan attempts terkait h5p (default moodle)
+     * @param int $courseId Course ID
+     * @param int $userId User ID
+     * @return void
+     */
+    public function cleanH5PActivityAndAttempts($courseId, $userId){
+        global $DB;
+
+        $sql = 'DELETE A, B
+                FROM {h5pactivity_attempts_results} A
+                JOIN {h5pactivity_attempts} B ON A.attemptid = B.id
+                JOIN {h5pactivity} C ON B.h5pactivityid = C.id
+                WHERE C.course = ?
+                AND B.userid = ?';
+        
+        $DB->execute(
+            $sql,
+            [$courseId, $userId]
+        );
+    }
 }
