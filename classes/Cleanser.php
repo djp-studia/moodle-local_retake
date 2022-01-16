@@ -99,4 +99,15 @@ class Cleanser
             [$courseId, $userId]
         );
     }
+
+    /**
+     * Menghapus completion dari cache sehingga direbuild ketika user 
+     * membuka halaman course setelah retake
+     * @param int $courseId Course ID
+     * @param int $userId User ID
+     */
+    public function removeCompletionCache($courseId, $userId){
+        $completionCache = \cache::make('core', 'completion');
+        $completionCache->delete($userId . '_' . $courseId);
+    }
 }

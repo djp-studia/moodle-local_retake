@@ -30,8 +30,8 @@ if(isset($_POST['confirm_retake'])){
     \local_retake\Cleanser::cleanH5PActivityAndAttempts($courseid, $USER->id);
     \local_retake\Cleanser::removeUserEnrollment($courseid, $USER->id);
 
-    // rebuild course cache untuk update tampilan di user
-    rebuild_course_cache($courseid);
+    // remove course completion cache
+    \local_retake\Cleanser::removeCompletionCache($courseid, $USER->id);
 
     // redirect ke course
     header("Location: $courseUrl");
