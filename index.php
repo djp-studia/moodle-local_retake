@@ -26,6 +26,7 @@ if(isset($_POST['confirm_retake'])){
     require_once($CFG->dirroot. '/course/lib.php');
 
     \local_retake\Cleanser::cleanActivityCompletion($courseid, $USER->id);
+    \local_retake\Cleanser::cleanScormData($courseid, $USER->id);
 
     // rebuild course cache untuk update tampilan di user
     rebuild_course_cache($courseid);
