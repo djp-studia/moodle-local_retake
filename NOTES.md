@@ -46,3 +46,15 @@ AND B.userid = 3
 ### 4.3 Delete Other Activity
 
 #### 4.3.1 File Activity (Resource)
+
+## 5. Delete User Enrollment
+
+```sql
+# delete enrollment
+SELECT B.*,
+       A.*
+FROM mdl_user_enrolments A
+JOIN mdl_enrol B ON A.enrolid = B.id
+WHERE B.courseid = 2
+AND A.userid = 2
+```

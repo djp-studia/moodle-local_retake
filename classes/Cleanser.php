@@ -76,4 +76,27 @@ class Cleanser
             [$courseId, $userId]
         );
     }
+
+    /**
+     * Fungsi untuk menghapus data enrolment user
+     * @param int $courseId
+     * @param int $userId
+     * @return void
+     */
+    public function removeUserEnrollment($courseId, $userId){
+        return; # masih error, halaman enroll tidak muncul
+
+        global $DB;
+
+        $sql = 'DELETE A
+                FROM {user_enrolments} A
+                JOIN {enrol} B ON A.enrolid = B.id
+                WHERE B.courseid = ?
+                AND A.userid = ?';
+
+        $DB->execute(
+            $sql,
+            [$courseId, $userId]
+        );
+    }
 }
