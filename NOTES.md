@@ -16,7 +16,19 @@ AND A.course = 2;
 
 ## 4. Delete Detail Activity
 
+### 4.0 Get Detail Activity
+
+
 ### 4.1 Delete Scorm Activity
+
+```sql
+SELECT B.*,
+       A.*
+FROM mdl_scorm_scoes_track A
+JOIN mdl_scorm B ON A.scormid = B.id
+WHERE B.course = 2
+AND A.userid = 3
+```
 
 ### 4.2 Delete H5P Activity
 
