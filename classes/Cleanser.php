@@ -17,7 +17,7 @@ class Cleanser
     * fungsi untuk menghapus seluruh activity completion record dari database berdasarkan ID Course dan User.
     * @param   int $courseId Course ID
     * @param   int $userId   User ID
-    * @return  int $data     Database API Status
+    * @return  void
     */
     public function cleanActivityCompletion($courseId, $userId) {
         global $DB;
@@ -28,11 +28,30 @@ class Cleanser
                 WHERE B.userid = ?
                 AND A.course = ?';
 
-        $data = $DB->execute(
+        $DB->execute(
             $sql,
             [$userId, $courseId]
         );
+    }
 
-        return $data;
+    /**
+     * fungsi untuk menghapus seluruh tracking yang dihasilkan oleh modul SCORM
+      * @param   int $courseId Course ID
+      * @param   int $userId   User ID
+      * @return  void
+     */
+    public function cleanScormData($courseId, $userId){
+        global $DB;
+
+        $sql = 'DELETE A
+                FROM {scorm_scoes_track} A
+                JOIN {scorm} B ON A.scormid = B.id
+                WHERE B.course = ?
+                AND A.userid = ?';
+        
+        $DB->execute(
+            $sql,
+            [$courseId, $userId]
+        );
     }
 }
