@@ -27,9 +27,9 @@ $PAGE->set_heading("Retake Course $course->fullname");
 if(isset($_POST['confirm_retake'])){
     require_once($CFG->dirroot. '/course/lib.php');
 
-    \local_retake\Cleanser::cleanActivityCompletion($courseid, $USER->id);
-    \local_retake\Cleanser::cleanScormData($courseid, $USER->id);
-    \local_retake\Cleanser::cleanH5PActivityAndAttempts($courseid, $USER->id);
+    \local_retake\Cleanser::removeActivityCompletion($courseid, $USER->id);
+    \local_retake\Cleanser::removeScormData($courseid, $USER->id);
+    \local_retake\Cleanser::removeH5PActivityAndAttempts($courseid, $USER->id);
     \local_retake\Cleanser::removeUserEnrollment($courseid, $USER->id);
     \local_retake\Cleanser::removeUserGrades($courseid, $USER->id);
     \local_retake\Cleanser::removeUserGradesHistory($courseid, $USER->id);

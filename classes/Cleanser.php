@@ -19,7 +19,7 @@ class Cleanser
     * @param   int $userId   User ID
     * @return  void
     */
-    public static function cleanActivityCompletion($courseId, $userId) {
+    public static function removeActivityCompletion($courseId, $userId) {
         global $DB;
 
         $sql = 'DELETE B
@@ -40,7 +40,7 @@ class Cleanser
       * @param   int $userId   User ID
       * @return  void
      */
-    public static function cleanScormData($courseId, $userId){
+    public static function removeScormData($courseId, $userId){
         global $DB;
 
         $sql = 'DELETE A
@@ -61,7 +61,7 @@ class Cleanser
      * @param int $userId User ID
      * @return void
      */
-    public static function cleanH5PActivityAndAttempts($courseId, $userId){
+    public static function removeH5PActivityAndAttempts($courseId, $userId){
         global $DB;
 
         $sql = 'DELETE A, B
