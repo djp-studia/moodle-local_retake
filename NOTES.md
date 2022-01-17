@@ -14,6 +14,26 @@ AND A.course = 2;
 
 ## 3. Delete User Course Grade
 
+### Current Grade
+
+```sql
+DELETE A
+FROM mdl_grade_grades A
+JOIN mdl_grade_items B ON A.itemid = B.id
+WHERE A.userid = 3
+AND B.courseid = 2
+```
+
+### Grade History
+
+```sql
+DELETE A
+FROM mdl_grade_grades_history A
+JOIN mdl_grade_items B ON A.itemid = B.id
+WHERE A.userid = 3
+AND B.courseid = 2
+```
+
 ## 4. Delete Detail Activity
 
 ### 4.0 Get Detail Activity
@@ -61,11 +81,21 @@ AND A.userid = 2
 
 # TODO
 
-- [ ] Clear Grades
-- [ ] Clear Course Completion
+- [x] Plugin dapat menghapus seluruh data terkait pembelajaran yang dilakukan oleh pegawai
+  - [x] Data Activity SCORM
+  - [x] Data Activity H5P/HVP
+  - [x] Data Activity Lainnya
+- [x] Plugin dapat mengapus seluruh data progress pembelajaran serta activity completion
+  - [x] Data Activity SCORM
+  - [x] Data Activity H5P/HVP
+  - [x] Data Activity Lainnya
+- [x] Plugin dapat menghapus seluruh data completion terkait grades
+- [ ] Plugin dapat menghapus course completion (aggregat dari activity completion)
   - [ ] Course Completion
   - [ ] Course Completion Criteria and Aggregat
-- [ ] Create Settings
+- [ ] Plugin harus bisa disetting dan diakses dengan kondisi dan proses tertentu
   - [ ] Enable on All Course
   - [ ] Enable on Specific Course
   - [ ] Except on Specific Course 
+  - [ ] Delete Grade History
+- [ ] Plugin harus mampu mencatat riwayat retake course oleh masing-masing pegawai
