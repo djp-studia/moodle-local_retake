@@ -19,7 +19,7 @@ class Cleanser
     * @param   int $userId   User ID
     * @return  void
     */
-    public function cleanActivityCompletion($courseId, $userId) {
+    public static function cleanActivityCompletion($courseId, $userId) {
         global $DB;
 
         $sql = 'DELETE B
@@ -40,7 +40,7 @@ class Cleanser
       * @param   int $userId   User ID
       * @return  void
      */
-    public function cleanScormData($courseId, $userId){
+    public static function cleanScormData($courseId, $userId){
         global $DB;
 
         $sql = 'DELETE A
@@ -61,7 +61,7 @@ class Cleanser
      * @param int $userId User ID
      * @return void
      */
-    public function cleanH5PActivityAndAttempts($courseId, $userId){
+    public static function cleanH5PActivityAndAttempts($courseId, $userId){
         global $DB;
 
         $sql = 'DELETE A, B
@@ -83,7 +83,7 @@ class Cleanser
      * @param int $userId
      * @return void
      */
-    public function removeUserEnrollment($courseId, $userId){
+    public static function removeUserEnrollment($courseId, $userId){
         return; # masih error, halaman enroll tidak muncul
 
         global $DB;
@@ -106,8 +106,48 @@ class Cleanser
      * @param int $courseId Course ID
      * @param int $userId User ID
      */
-    public function removeCompletionCache($courseId, $userId){
+    public static function removeCompletionCache($courseId, $userId){
         $completionCache = \cache::make('core', 'completion');
         $completionCache->delete($userId . '_' . $courseId);
+    }
+
+    /**
+     * Menghapus data grades terakhir (current grade)
+     * @param int $courseId Course ID
+     * @param int $userId User ID
+     */
+    public static function removeUserGrades($courseId, $userId){
+        global $DB;
+
+        $sql = 'DELETE A
+                FROM {grade_grades} A
+                JOIN {grade_items} B ON A.itemid = B.id
+                WHERE A.userid = ?
+                AND B.courseid = ?';
+        
+        $data = $DB->execute(
+            $sql,
+            [$userId, $courseId]
+        );
+    }
+
+    /**
+     * Menghapus data grades history
+     * @param int $courseId Course ID
+     * @param int $userId User ID
+     */
+    public static function removeUserGradesHistory($courseId, $userId){
+        global $DB;
+
+        $sql = 'DELETE A
+                FROM {grade_grades_history} A
+                JOIN {grade_items} B ON A.itemid = B.id
+                WHERE A.userid = ?
+                AND B.courseid = ?';
+        
+        $DB->execute(
+            $sql,
+            [$userId, $courseId]
+        );
     }
 }
