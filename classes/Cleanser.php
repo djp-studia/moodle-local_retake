@@ -150,4 +150,22 @@ class Cleanser
             [$userId, $courseId]
         );
     }
+
+    /**
+     * Menghapus data course completion
+     * @param int $courseId
+     * @param int $userId
+     */
+
+     public static function removeUserCourseCompletion($courseId, $userId){
+         global $DB;
+
+        $sql = 'DELETE FROM {course_completions}
+                WHERE userid = ? AND course = ?';
+
+        $DB->execute(
+            $sql,
+            [$userId, $courseId]
+        );
+     }
 }
