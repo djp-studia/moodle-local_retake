@@ -58,3 +58,14 @@ JOIN mdl_enrol B ON A.enrolid = B.id
 WHERE B.courseid = 2
 AND A.userid = 2
 ```
+
+# TODO
+
+- [ ] Clear Grades
+- [ ] Clear Course Completion
+  - [ ] Course Completion
+  - [ ] Course Completion Criteria and Aggregat
+- [ ] Create Settings
+  - [ ] Enable on All Course
+  - [ ] Enable on Specific Course
+  - [ ] Except on Specific Course 
