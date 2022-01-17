@@ -79,6 +79,18 @@ WHERE B.courseid = 2
 AND A.userid = 2
 ```
 
+## 6. Delete Issued Badges
+
+```sql
+DELETE A, C
+FROM mdl_badge_issued A
+JOIN mdl_badge B ON A.badgeid = B.id
+JOIN mdl_badge_criteria_met C ON A.id = C.issuedid
+WHERE A.userid = 3
+AND B.courseid = 2
+AND YEAR(FROM_UNIXTIME(A.dateissued)) = YEAR(NOW())
+```
+
 # TODO
 
 - [x] Plugin dapat menghapus seluruh data terkait pembelajaran yang dilakukan oleh pegawai

@@ -156,9 +156,8 @@ class Cleanser
      * @param int $courseId
      * @param int $userId
      */
-
-     public static function removeUserCourseCompletion($courseId, $userId){
-         global $DB;
+    public static function removeUserCourseCompletion($courseId, $userId){
+        global $DB;
 
         $sql = 'DELETE FROM {course_completions}
                 WHERE userid = ? AND course = ?';
@@ -167,5 +166,48 @@ class Cleanser
             $sql,
             [$userId, $courseId]
         );
-     }
+    }
+
+    /**
+     * Menghapus data kritera course completion per user
+     * @param int $courseId
+     * @param int $userId
+     */
+    public static function removeUserCourseCompletionCriteria($courseId, $userId){
+        global $DB;
+
+        $sql = 'DELETE FROM {course_completion_crit_compl}
+                WHERE userid = ? AND course = ?';
+        
+        $DB->execute(
+            $sql,
+            [$userId, $courseId]
+        );
+    }
+
+    /**
+     * Menghapus data badges yang sudah diterbitkan pada tahun berjalan
+     * @param int $courseId
+     * @param int $userId
+     */
+    public static function removeUserIssuedBadges($courseId, $userId){
+        global $DB;
+
+        $sql = 'DELETE A, C
+                FROM {badge_issued} A
+                JOIN {badge} B ON A.badgeid = B.id
+                JOIN {badge_criteria_met} C ON A.id = C.issuedid
+                WHERE A.userid = ?
+                AND B.courseid = ?
+                AND YEAR(FROM_UNIXTIME(A.dateissued)) = YEAR(NOW())';
+        
+        $DB->execute(
+            $sql,
+            [
+                'userId' => $userId,
+                'courseId' => $courseId
+            ]
+            );
+    }
+    
 }

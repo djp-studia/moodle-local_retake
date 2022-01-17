@@ -33,6 +33,9 @@ if(isset($_POST['confirm_retake'])){
     \local_retake\Cleanser::removeUserEnrollment($courseid, $USER->id);
     \local_retake\Cleanser::removeUserGrades($courseid, $USER->id);
     \local_retake\Cleanser::removeUserGradesHistory($courseid, $USER->id);
+     \local_retake\Cleanser::removeUserCourseCompletion($courseid, $USER->id);
+     \local_retake\Cleanser::removeUserCourseCompletionCriteria($courseid, $USER->id);
+     \local_retake\Cleanser::removeUserIssuedBadges($courseid, $USER->id);
 
     // remove course completion cache
     \local_retake\Cleanser::removeCompletionCache($courseid, $USER->id);
