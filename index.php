@@ -48,8 +48,11 @@ if(isset($_POST['confirm_retake'])){
     // remove course completion cache
     \local_retake\Cleanser::removeCompletionCache($courseid, $USER->id);
 
+    // add notification
+    \core\notification::success(get_string('success_message', 'local_retake', $course));
+
     // redirect ke course
-    header("Location: $courseUrl");
+    redirect($courseUrl);
 }
 
 
