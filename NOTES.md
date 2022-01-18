@@ -102,9 +102,11 @@ AND YEAR(FROM_UNIXTIME(A.dateissued)) = YEAR(NOW())
   - [x] Data Activity H5P/HVP
   - [x] Data Activity Lainnya
 - [x] Plugin dapat menghapus seluruh data completion terkait grades
-- [ ] Plugin dapat menghapus course completion (aggregat dari activity completion)
-  - [ ] Course Completion
-  - [ ] Course Completion Criteria and Aggregat
+- [x] Plugin dapat menghapus data badges yang diberikan kepada user (khusus untuk tahun berjalan)
+- [x] Plugin dapat menghapus course completion (aggregat dari activity completion)
+  - [x] Course Completion
+  - [x] Course Completion Criteria and Aggregat
+- [x] Plugin harus mampu untuk unenroll user dari course terkait
 - [ ] Plugin harus bisa disetting dan diakses dengan kondisi dan proses tertentu
   - [ ] Enable on All Course
   - [ ] Enable on Specific Course

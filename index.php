@@ -26,6 +26,7 @@ $PAGE->set_heading("Retake Course $course->fullname");
 
 if(isset($_POST['confirm_retake'])){
     require_once($CFG->dirroot. '/course/lib.php');
+    require_once($CFG->dirroot. '/lib/enrollib.php');
 
     \local_retake\Cleanser::removeActivityCompletion($courseid, $USER->id);
     \local_retake\Cleanser::removeScormData($courseid, $USER->id);
@@ -36,6 +37,13 @@ if(isset($_POST['confirm_retake'])){
     \local_retake\Cleanser::removeUserCourseCompletion($courseid, $USER->id);
     \local_retake\Cleanser::removeUserCourseCompletionCriteria($courseid, $USER->id);
     \local_retake\Cleanser::removeUserIssuedBadges($courseid, $USER->id);
+
+    // unenroll user
+    $instances = $DB->get_records('enrol', array('courseid' => $courseid));
+    foreach ($instances as $instance) {
+        $plugin = enrol_get_plugin($instance->enrol);
+        $plugin->unenrol_user($instance, $USER->id);
+    }
 
     // remove course completion cache
     \local_retake\Cleanser::removeCompletionCache($courseid, $USER->id);

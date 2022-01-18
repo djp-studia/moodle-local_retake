@@ -11,6 +11,8 @@ namespace local_retake;
 
 defined('MOODLE_INTERNAL') || die();
 
+use context_user;
+
 class Cleanser 
 {
     /**
@@ -109,6 +111,9 @@ class Cleanser
     public static function removeCompletionCache($courseId, $userId){
         $completionCache = \cache::make('core', 'completion');
         $completionCache->delete($userId . '_' . $courseId);
+
+        $courseCompletinCache = \cache::make('core', 'coursecompletion');
+        $courseCompletinCache->delete($userId . '_' . $courseId);
     }
 
     /**
@@ -193,6 +198,27 @@ class Cleanser
     public static function removeUserIssuedBadges($courseId, $userId){
         global $DB;
 
+        // get badge id data
+        $sql = 'SELECT distinct badgeid
+                FROM {badge} A
+                JOIN {badge_issued} B ON A.id = B.badgeid
+                WHERE B.userid = :userid
+                AND A.courseid = :courseid';
+        
+        $badges = $DB->get_records_sql(
+            $sql, 
+            ['userid' => $userId, 'courseid' => $courseId]
+        );
+
+        // remove badge image per user from file system
+        $fs = get_file_storage();
+
+        foreach($badges as $badge) {
+            $usercontext = context_user::instance($userId);
+            $fs->delete_area_files($usercontext->id, 'badges', 'userbadge', $badge->badgeid);
+        }
+        
+        // remove all badge issued data and all its critria met
         $sql = 'DELETE A, C
                 FROM {badge_issued} A
                 JOIN {badge} B ON A.badgeid = B.id
@@ -203,11 +229,8 @@ class Cleanser
         
         $DB->execute(
             $sql,
-            [
-                'userId' => $userId,
-                'courseId' => $courseId
-            ]
-            );
+            [$userId, $courseId]
+        );
     }
     
 }
