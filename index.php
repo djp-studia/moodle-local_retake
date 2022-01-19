@@ -80,6 +80,9 @@ if(isset($_POST['confirm_retake'])){
         $plugin->unenrol_user($instance, $USER->id);
     }
 
+    // insert retake history
+    $retake->retake($USER->id);
+
     // remove course completion cache
     \local_retake\Cleanser::removeCompletionCache($courseid, $USER->id);
 

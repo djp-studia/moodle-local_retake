@@ -112,4 +112,22 @@ class Retake
 
         return false;
     }
+
+    /**
+     * fungsi untuk merekam history retake oleh user
+     * @param int $userId User yang melakukan retake
+     */
+    public function retake($userId){
+        global $DB;
+        $data = array(
+            "course" => $this->courseId,
+            "user" => $userId,
+            "timecreated" => time()
+        );
+
+        return $DB->insert_record(
+            $this->retakeHistoryTable,
+            $data
+        );
+    }
 }
