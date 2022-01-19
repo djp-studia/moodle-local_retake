@@ -43,7 +43,7 @@ if ($hassiteconfig) {
 
         // enable on specific course
         $settingspage->add(new admin_setting_configtext(
-            'local_retake/enableonspecificcourse',
+            'local_retake/maxretake',
             'Max Retake',
             'Max retake per year',
             1,

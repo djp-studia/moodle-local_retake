@@ -80,4 +80,36 @@ class Retake
         global $DB;
         return $DB->record_exists($this->retakeAllowTable, array("course" => $this->courseId));
     }
+
+    /**
+     * fungsi untuk melakukan pengecekan apakah user bersangkutan sudah melebihi batas maksimal retake
+     * @param int $userId ID User yang dilakukan pengecekan
+     */
+    public function isAllowedToRetake($userId){
+        global $DB;
+        $maxRetakePerYear = get_config('local_retake')->maxretake;
+
+        if ($maxRetakePerYear == -1){
+            return true;
+        }
+
+        if ($maxRetakePerYear == 0){
+            return false;
+        }
+
+        $userRetake = $DB->get_record_sql(
+            'SELECT COUNT(1) count
+            FROM mdl_local_retake_history A
+            WHERE YEAR(FROM_UNIXTIME(timecreated)) = YEAR(NOW())
+            AND A.user = ?
+            AND A.course = ?',
+            [$userId, $this->courseId]
+        );
+
+        if($userRetake->count < $maxRetakePerYear){
+            return true;
+        }
+
+        return false;
+    }
 }
