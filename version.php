@@ -16,5 +16,5 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version = 202201180002;
+$plugin->version = 202201180005;
 $plugin->component = 'local_retake';

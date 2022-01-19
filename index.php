@@ -23,10 +23,23 @@ require_login();
 $courseid = required_param('id', PARAM_INT);
 
 // get data course berdasarkan parameter course id dan user id
+$retake = new \local_retake\Retake($courseid);
 $course = $DB->get_record('course', array('id' => $courseid), '*', MUST_EXIST);
 $context = context_course::instance($course->id);
 $url = new moodle_url('/local/retake/index.php', array('id'=>$course->id));
 $courseUrl = new moodle_url('/course/view.php', array('id' => $courseid));
+
+// cek apakah retake enable
+$globallyEnable = get_config('local_retake')->enableonallcourse;
+$locallyEnable = $retake->isEnabled();
+
+if(!$globallyEnable && !$locallyEnable) {
+    // add notification
+    \core\notification::success(get_string('disabled_message', 'local_retake', $course));
+
+    // redirect ke course
+    redirect($courseUrl);
+}
 
 // set page content
 $PAGE->set_url($url);

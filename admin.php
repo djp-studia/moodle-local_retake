@@ -32,6 +32,9 @@ $context = context_course::instance($course->id);
 $url = new moodle_url('/local/retake/admin.php', array('id'=>$course->id));
 $courseUrl = new moodle_url('/course/view.php', array('id' => $courseid));
 
+// required course reset capability
+require_capability('moodle/course:reset', $context);
+
 // set page content
 $PAGE->set_url($url);
 $PAGE->set_context($context);
@@ -52,7 +55,6 @@ $mform = new simplehtml_form($url);
 $mform->set_data(array('enable_retake' => $retake->isEnabled()));
 
 // if form is executed
-
 if($formData = $mform->get_data()){
     if($formData->enable_retake == 1){
         $retake->enable($USER->id);

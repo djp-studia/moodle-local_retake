@@ -24,9 +24,13 @@ function local_retake_extend_navigation_course($navigation, $course, $context) {
 
     if($resetCapability){
         $url = new moodle_url('/local/retake/admin.php', array('id' => $course->id));
+        $icon = 'i/settings';
+        $label = "Retake Settings";
     } else {
         $url = new moodle_url('/local/retake/index.php', array('id' => $course->id));
+        $icon = 'i/reload';
+        $label = 'Retake Course';
     }
 
-    $navigation->add('Retake Course', $url, navigation_node::TYPE_SETTING, null, null, new pix_icon('i/reload', ''));
+    $navigation->add($label, $url, navigation_node::TYPE_SETTING, null, null, new pix_icon($icon, ''));
 }
