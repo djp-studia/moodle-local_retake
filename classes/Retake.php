@@ -39,13 +39,14 @@ class Retake
         global $DB;
 
         return $DB->get_records_sql(
-            'SELECT A.*,
-                B.firstname,
-                B.username,
-                FROM_UNIXTIME(A.timecreated) datecreated
+            'SELECT A.user,
+                    B.username,
+                    B.firstname,
+                    COUNT(1) total
             FROM {local_retake_history} A
             JOIN {user} B ON A.user = B.id
-            WHERE course = ?',
+            WHERE course = ?
+            GROUP BY 1, 2, 3',
             [$this->courseId]
         );
     }
@@ -99,7 +100,7 @@ class Retake
 
         $userRetake = $DB->get_record_sql(
             'SELECT COUNT(1) count
-            FROM mdl_local_retake_history A
+            FROM {local_retake_history} A
             WHERE YEAR(FROM_UNIXTIME(timecreated)) = YEAR(NOW())
             AND A.user = ?
             AND A.course = ?',

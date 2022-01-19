@@ -100,7 +100,7 @@ echo $OUTPUT->header();
 // prepare confirmation message
 $confirmMessage = $OUTPUT->render_from_template(
     'local_retake/message', array(
-        "warning" => "Test Warning",
+        "warning" => get_string('warning', 'local_retake'),
         "warning_detail" => get_string('warning_detail', 'local_retake'),
         "confirmation" => get_string('confirmation', 'local_retake')
     )

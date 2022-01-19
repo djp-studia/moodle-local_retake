@@ -43,11 +43,6 @@ $PAGE->set_pagelayout('admin');
 $PAGE->set_title('Retake Course');
 $PAGE->set_heading("Retake Course $course->fullname");
 
-// display content
-echo $OUTPUT->header();
-
-echo '<h3>Retake Settings</h3>';
-
 // generate settings form
 $mform = new simplehtml_form($url);
 
@@ -58,10 +53,21 @@ $mform->set_data(array('enable_retake' => $retake->isEnabled()));
 if($formData = $mform->get_data()){
     if($formData->enable_retake == 1){
         $retake->enable($USER->id);
+        $label = "Enable";
     } else {
         $retake->disable();
+        $label = "Disable";
     }
+
+    \core\notification::success("<strong>$label</strong> retake success");
+
+    redirect($url);
 }
+
+// display content
+echo $OUTPUT->header();
+
+echo '<h3>Retake Settings</h3>';
 
 $mform->display();
 
@@ -74,14 +80,17 @@ echo '<h3>Retake History</h3>';
     <tr>
         <th>Username</th>
         <th>Name</th>
-        <th>Retake Date</th>
+        <th>Total Retake</th>
+        <th>Reset</th>
     </tr>
     <?php
         foreach($retake->getHistory() as $row){
+            $reset_url = new moodle_url('/local/retake/reset.php', array('user' => $row->user));
             echo "<tr>
                     <td>$row->username</td>
                     <td>$row->firstname</td>
-                    <td>$row->datecreated</td>
+                    <td>$row->total</td>
+                    <td><a href='$reset_url' class='btn btn-danger'>Reset</a></td>
                 </tr>";
         }
     ?>
