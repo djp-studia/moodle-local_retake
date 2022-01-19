@@ -96,9 +96,6 @@ if(isset($_POST['confirm_retake'])){
 
 // display content
 echo $OUTPUT->header();
-echo "Globally Enable " . $globallyEnable . '<br>';
-echo "Locally Enable " . $locallyEnable . '<br>';
-echo "Allowed Retake " . (int) $retake->isAllowedToRetake($USER->id) . '<br>';
 
 // prepare confirmation message
 $confirmMessage = $OUTPUT->render_from_template(
