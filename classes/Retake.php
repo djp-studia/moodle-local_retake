@@ -151,4 +151,17 @@ class Retake
             [$this->courseId, $userId]
         )->total;
     }
+
+    /**
+     * fungsi untuk menghapus riwayat retake user
+     * @param int $userId User ID yang ingin dicari
+     */
+    public function deleteRetakeHistoryByUser($userId){
+        global $DB;
+
+        return $DB->delete_records(
+            "local_retake_history",
+            array("user" => $userId, "course" => $this->courseId)
+        );
+    }
 }
