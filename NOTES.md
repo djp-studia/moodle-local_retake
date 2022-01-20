@@ -1,3 +1,34 @@
+# TODO
+
+- [x] Plugin dapat menghapus seluruh data terkait pembelajaran yang dilakukan oleh pegawai
+  - [x] Data Activity SCORM
+  - [x] Data Activity H5P/HVP
+  - [x] Data Activity Lainnya
+- [x] Plugin dapat mengapus seluruh data progress pembelajaran serta activity completion
+  - [x] Data Activity SCORM
+  - [x] Data Activity H5P/HVP
+  - [x] Data Activity Lainnya
+- [x] Plugin dapat menghapus seluruh data completion terkait grades
+- [x] Plugin dapat menghapus data badges yang diberikan kepada user (khusus untuk tahun berjalan)
+- [x] Plugin dapat menghapus course completion (aggregat dari activity completion)
+  - [x] Course Completion
+  - [x] Course Completion Criteria and Aggregat
+- [x] Plugin harus mampu untuk unenroll user dari course terkait
+- [x] Plugin harus bisa disetting dan diakses dengan kondisi dan proses tertentu
+  - [x] Enable on All Course
+  - [ ] ~~Enable on Specific Course~~
+  - [ ] ~~Except on Specific Course~~ 
+  - [ ] ~~Delete Grade History~~
+  - [x] Enable per Course
+  - [x] Max Retake per Course
+- [ ] Plugin harus mampu mencatat riwayat retake course oleh masing-masing pegawai
+  - [x] Menampilkan history per course
+  - [ ] Pagination per course #1
+- [ ] Penambahan Warning Message terkait max retake #2
+- [ ] Plugin mampu memberikan akses kepada administrator untuk reset course pegawai #2
+
+
+
 # Sumber Data Course dan Activity
 
 ## 1. Delete Course Completion
@@ -90,26 +121,3 @@ WHERE A.userid = 3
 AND B.courseid = 2
 AND YEAR(FROM_UNIXTIME(A.dateissued)) = YEAR(NOW())
 ```
-
-# TODO
-
-- [x] Plugin dapat menghapus seluruh data terkait pembelajaran yang dilakukan oleh pegawai
-  - [x] Data Activity SCORM
-  - [x] Data Activity H5P/HVP
-  - [x] Data Activity Lainnya
-- [x] Plugin dapat mengapus seluruh data progress pembelajaran serta activity completion
-  - [x] Data Activity SCORM
-  - [x] Data Activity H5P/HVP
-  - [x] Data Activity Lainnya
-- [x] Plugin dapat menghapus seluruh data completion terkait grades
-- [x] Plugin dapat menghapus data badges yang diberikan kepada user (khusus untuk tahun berjalan)
-- [x] Plugin dapat menghapus course completion (aggregat dari activity completion)
-  - [x] Course Completion
-  - [x] Course Completion Criteria and Aggregat
-- [x] Plugin harus mampu untuk unenroll user dari course terkait
-- [ ] Plugin harus bisa disetting dan diakses dengan kondisi dan proses tertentu
-  - [ ] Enable on All Course
-  - [ ] Enable on Specific Course
-  - [ ] Except on Specific Course 
-  - [ ] Delete Grade History
-- [ ] Plugin harus mampu mencatat riwayat retake course oleh masing-masing pegawai
