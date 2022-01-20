@@ -106,7 +106,7 @@ $userRetake = $retake->getTotalRetakeByUser($USER->id);
 if($maxRetake == -1) {
     $retakeMessage = "";
 } else {
-    $retakeMessage = "Anda sudah menggunakan $userRetake dari $maxRetake kali jatah retake course tahun ini.";
+    $retakeMessage = get_string('retake_quota_warning', 'local_retake', ["maxRetake" => $maxRetake, "userRetake" => $userRetake]);
 }
 
 $confirmMessage = $OUTPUT->render_from_template(

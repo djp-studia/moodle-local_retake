@@ -21,3 +21,4 @@ $string['confirmation'] = 'Apakah Anda yakin untuk mengulang course?';
 $string['success_message'] = 'Data Course <strong>{$a->fullname}</strong> Anda berhasil dihapus. Silakan mengerjakan kembali.';
 $string['disabled_message'] = 'Administrator tidak mengaktifkan menu retake pada course <strong>{$a->fullname}</strong>';
 $string['max_retake_error'] = 'Anda sudah mencapai batas maksimal retake di course <strong>{$a->fullname}</strong> pada tahun ini. Hubungi Administrator.';
+$string['retake_quota_warning'] = 'Anda sudah menggunakan {$a->userRetake} dari {$a->maxRetake} kali jatah retake course tahun ini.';
