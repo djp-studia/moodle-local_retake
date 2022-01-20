@@ -131,4 +131,24 @@ class Retake
             $data
         );
     }
+
+    /**
+     * fungsi untuk mendapatkan jumlah retake yang sudah digunakan
+     * oleh user
+     * @param int $userid User ID yang ingin dicari
+     */
+    public function getTotalRetakeByUser($userId){
+        global $DB;
+
+        $sql = "SELECT count(1) total
+                FROM mdl_local_retake_history
+                WHERE course = ?
+                AND user = ?
+                AND YEAR(FROM_UNIXTIME(timecreated)) = YEAR(NOW())";
+        
+        return $DB->get_record_sql(
+            $sql,
+            [$this->courseId, $userId]
+        )->total;
+    }
 }

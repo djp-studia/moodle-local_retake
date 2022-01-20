@@ -22,7 +22,8 @@ defined('MOODLE_INTERNAL') || die;
 function local_retake_extend_navigation_course($navigation, $course, $context) {
     $resetCapability = has_capability('moodle/course:reset', $context);
     $isEnabled = (new \local_retake\Retake($course->id))->isEnabled();
-    $globallyEnabled = get_config('local_retake')->enableonallcourse;
+    $config = get_config('local_retake');
+
 
     if($resetCapability){
         $url = new moodle_url('/local/retake/admin.php', array('id' => $course->id));
@@ -34,7 +35,7 @@ function local_retake_extend_navigation_course($navigation, $course, $context) {
         $label = 'Retake Course';
     }
 
-    if(!$resetCapability && !($isEnabled || $globallyEnabled)){
+    if((!$resetCapability && !($isEnabled || $config->enableonallcourse)) || $config->maxretake == 0){
         return;
     } else {
         $navigation->add($label, $url, navigation_node::TYPE_SETTING, null, null, new pix_icon($icon, ''));

@@ -24,13 +24,14 @@ $courseid = required_param('id', PARAM_INT);
 
 // get data course berdasarkan parameter course id dan user id
 $retake = new \local_retake\Retake($courseid);
+$retakeConfig = get_config('local_retake');
 $course = $DB->get_record('course', array('id' => $courseid), '*', MUST_EXIST);
 $context = context_course::instance($course->id);
 $url = new moodle_url('/local/retake/index.php', array('id'=>$course->id));
 $courseUrl = new moodle_url('/course/view.php', array('id' => $courseid));
 
 // cek apakah retake enable
-$globallyEnable = get_config('local_retake')->enableonallcourse;
+$globallyEnable = $retakeConfig->enableonallcourse;
 $locallyEnable = $retake->isEnabled();
 
 if(!$globallyEnable && !$locallyEnable) {
@@ -98,11 +99,22 @@ if(isset($_POST['confirm_retake'])){
 echo $OUTPUT->header();
 
 // prepare confirmation message
+$maxRetake = $retakeConfig->maxretake;
+$userRetake = $retake->getTotalRetakeByUser($USER->id);
+
+// construct pesan jatah retake
+if($maxRetake == -1) {
+    $retakeMessage = "";
+} else {
+    $retakeMessage = "Anda sudah menggunakan $userRetake dari $maxRetake kali jatah retake course tahun ini.";
+}
+
 $confirmMessage = $OUTPUT->render_from_template(
     'local_retake/message', array(
         "warning" => get_string('warning', 'local_retake'),
         "warning_detail" => get_string('warning_detail', 'local_retake'),
-        "confirmation" => get_string('confirmation', 'local_retake')
+        "confirmation" => get_string('confirmation', 'local_retake'),
+        "retake_message" => $retakeMessage
     )
 );
 $yesUrl = new moodle_url('/local/retake/index.php', ['id' => $courseid, 'confirm_retake' => 'true']);

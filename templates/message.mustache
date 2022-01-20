@@ -4,9 +4,14 @@
     </svg>
     <strong>{{ warning }}</strong> <br/>
     <div class="mt-2">
-        {{ warning_detail }}  
+        {{ warning_detail }}
     </div>
 </div>         
 <div>
-    <p>{{ confirmation }}</p>
+    <p>
+        {{#retake_message}}
+            <p>{{ retake_message }}
+        {{/retake_message}}
+        {{ confirmation }}
+    </p>
 </div>
